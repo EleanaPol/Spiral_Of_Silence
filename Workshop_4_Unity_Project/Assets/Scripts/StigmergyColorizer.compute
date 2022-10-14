@@ -1,0 +1,19 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Colorizer
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Environment;
+//RWStructuredBuffer<int> buffer;
+RWStructuredBuffer<float> Colors;
+int res;
+
+[numthreads(8,8,1)]
+void Colorizer(uint3 id : SV_DispatchThreadID)
+{
+    // TODO: insert actual code here!
+    int index = id.y * res + id.x;
+    float col =  Colors[index];
+
+    Environment[id.xy] = col;
+}
